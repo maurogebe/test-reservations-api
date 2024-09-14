@@ -31,6 +31,14 @@ public class CustomerUseCase {
         return CustomerMapper.INSTANCE.customerToCustomerDTO(customerById.get());
     }
     
+    public CustomerDTO getCustomerByEmail(String email) {
+        Optional<Customer> customerById = this.customerRepository.findByEmail(email);
+        
+        if(customerById.isEmpty()) throw new ApiRequestException("No se encontró el cliente con correo: " + email, HttpStatus.NOT_FOUND);
+        
+        return CustomerMapper.INSTANCE.customerToCustomerDTO(customerById.get());
+    }
+    
     public List<CustomerDTO> getCustomers() {
         List<Customer> customers = this.customerRepository.findAll();
         return CustomerMapper.INSTANCE.customersToCustomersDTO(customers);
