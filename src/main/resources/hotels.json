@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Hotel Medellín Plaza",
+    "description": "Hotel de lujo en el centro de Medellín",
+    "address": "Calle 50 #70-30",
+    "cityName": "Medellín",
+    "rooms": [
+      {
+        "number": "201",
+        "description": "Habitación sencilla",
+        "price": 120.0,
+        "capacity": 2
+      },
+      {
+        "number": "202",
+        "description": "Habitación doble",
+        "price": 180.0,
+        "capacity": 4
+      }
+    ]
+  },
+  {
+    "name": "Hotel Bogotá Capital",
+    "description": "Hotel moderno cerca del aeropuerto en Bogotá",
+    "address": "Avenida El Dorado #100-89",
+    "cityName": "Bogotá",
+    "rooms": [
+      {
+        "number": "301",
+        "description": "Suite ejecutiva",
+        "price": 300.0,
+        "capacity": 4
+      },
+      {
+        "number": "302",
+        "description": "Habitación estándar",
+        "price": 150.0,
+        "capacity": 2
+      }
+    ]
+  }
+]

@@ -40,7 +40,8 @@ public class SecurityConfig {
         urlRegistry
             .requestMatchers(HttpMethod.POST, "/auth/sign-in").permitAll()
             .requestMatchers(HttpMethod.POST, "/auth/sign-up").permitAll()
-            .requestMatchers(HttpMethod.GET, "/status").permitAll()
+            .requestMatchers(HttpMethod.GET, "/country/seed").permitAll()
+            .requestMatchers(HttpMethod.GET, "/hotel/seed").permitAll()
             .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
             .requestMatchers("/actuator/**").permitAll()
             .anyRequest().authenticated();

@@ -31,4 +31,9 @@ public class City {
 
     public City() {
     }
+    
+    public City(String name, State state) {
+        this.name = name;
+        this.state = state;
+    }
 }

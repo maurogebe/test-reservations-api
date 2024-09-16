@@ -1,0 +1,20 @@
+[
+  {
+    "code": "CO",
+    "name": "Colombia",
+    "states": [
+      {
+        "name": "Antioquia",
+        "cities": ["Medellín", "Envigado", "Bello"]
+      },
+      {
+        "name": "Cundinamarca",
+        "cities": ["Bogotá", "Soacha", "Chía"]
+      },
+      {
+        "name": "Valle del Cauca",
+        "cities": ["Cali", "Palmira", "Buenaventura"]
+      }
+    ]
+  }
+]

@@ -1,94 +1,110 @@
-# API Template
+# API de Reservaciones de Hotel
 
 ## Descripción
 
-Este es un proyecto de API creado como plantilla para demostrar las capacidades de Spring Boot con varias tecnologías y herramientas. La API está diseñada para ser extensible y adaptable a diferentes necesidades.
+Esta es una API para la gestión de reservaciones en hoteles. La API permite manejar países, estados, ciudades, hoteles, habitaciones y reservas, con autenticación y autorización implementadas mediante JWT.
 
 ## Tecnologías Usadas
 
-**Java:** Lenguaje principal para el desarrollo de la lógica de negocio. :coffee:
-
-**Spring Boot:** Framework utilizado para crear servicios web RESTful. :herb:
-
-**Spring Boot Starter Data JPA:** Para la integración con JPA para el manejo de datos. :file_cabinet:
-
-**Spring Boot Starter Web:** Para el desarrollo de aplicaciones web. :globe_with_meridians:
-
-**Spring Boot Starter Security:** Para implementar seguridad en la aplicación. :closed_lock_with_key:
-
-**Spring Boot Starter OAuth2 Resource Server:** Para la implementación de autenticación y autorización con OAuth2.
-
-**Base de Datos:** :card_file_box:
-
-**MySQL:** Sistema de gestión de base de datos utilizado para almacenar la información de la aplicación. :file_cabinet:
-
-**MySQL Connector:** Conector JDBC para MySQL.
-
-**JWT (JSON Web Tokens):**
-
-- `jjwt-api`, `jjwt-impl`, `jjwt-jackson`: Bibliotecas para la generación y validación de tokens JWT.
-
-**Correo Electrónico:** :email:
-
-**Mailjet Client:** Para el envío de correos electrónicos a través de Mailjet.
-
-**Generación de Documentos:**
-
-- **iText7**: Para la generación de PDFs. :page_facing_up:
-- **Flying Saucer y OpenPDF:** Herramientas para renderizar y generar documentos PDF. :page_facing_up:
-- **Apache PDFBox:** Para la manipulación de documentos PDF.
-
-**Mapeo de Objetos:**
-
-- **MapStruct:** Para la conversión entre objetos Java.
-- **Reconocimiento Óptico de Caracteres (OCR):** :mag:
-   - **Tess4J:** Biblioteca para implementar OCR usando Tesseract con IA. :robot:
-
-**Thymeleaf:** Motor de plantillas para generar vistas dinámicas en el servidor.
-
-**Lombok:** Biblioteca para reducir el código boilerplate en Java. :wrench:
-
-**Testing:**
-
-- **JUnit:** Framework de pruebas unitarias. :microscope:
-- **Spring Boot Starter Test y Spring Security Test:** Para pruebas en la aplicación. :test_tube:
-- 
-## Arquitectura Hexagonal
-
-Este proyecto utiliza **Arquitectura Hexagonal** (también conocida como Arquitectura de Puertos y Adaptadores) para organizar el código y facilitar la extensión y mantenimiento. La arquitectura hexagonal ayuda a mantener el núcleo de la aplicación desacoplado de las interfaces externas (como bases de datos, servicios web, etc.).
-
-En esta arquitectura, el núcleo de la aplicación está en el centro, y las interfaces externas se comunican con él a través de puertos y adaptadores. Los puertos definen las operaciones que el núcleo puede realizar, mientras que los adaptadores implementan las interfaces para interactuar con el núcleo.
-
-Para más información sobre la Arquitectura Hexagonal, puedes consultar la [documentación oficial](https://en.wikipedia.org/wiki/Hexagonal_architecture_(software)) y [artículos adicionales](https://www.dddcommunity.org/ddd/hexagonal-architecture/).
+- **Java:** Lenguaje principal para el desarrollo de la lógica de negocio. ☕
+- **Spring Boot:** Framework utilizado para crear servicios web RESTful. 🌿
+- **Spring Security:** Para la implementación de seguridad en la aplicación. 🔐
+- **JWT (JSON Web Tokens):** Para la generación y validación de tokens JWT.
+- **MySQL:** Sistema de gestión de base de datos utilizado para almacenar la información de la aplicación. 💾
+- **Mailjet Client:** Para el envío de correos electrónicos. ✉️
+- **Swagger:** Para la documentación interactiva de la API. 📄
+- **MapStruct:** Para el mapeo de entidades y DTOs. 🔄
+- **Lombok:** Para reducir el código boilerplate en Java. 🔧
 
 ## Instalación
 
 Para clonar este repositorio y ejecutar la aplicación localmente, sigue estos pasos:
 
-1. Clona el repositorio:
+1. **Clona el repositorio:**
     ```bash
-    git clone https://github.com/maurogebe/template-api-spring-boot.git
+    git clone https://github.com/maurogebe/hotel-reservation-api.git
     ```
 
-2. Navega al directorio del proyecto:
+2. **Navega al directorio del proyecto:**
     ```bash
-    cd template-api-spring-boot
+    cd hotel-reservation-api
     ```
 
-3. Construye el proyecto usando Gradle:
+3. **Configura la base de datos:**
+   Asegúrate de tener MySQL configurado y ejecutándose. Actualiza las propiedades de la base de datos en `application.properties` o `application.yml`.
+
+4. **Construye el proyecto usando Gradle:**
     ```bash
     ./gradlew build
     ```
 
-4. Ejecuta la aplicación:
+5. **Ejecuta la aplicación:**
     ```bash
     ./gradlew bootRun
     ```
 
+6. **Accede a la documentación Swagger:**
+   Una vez la aplicación esté corriendo, puedes ver la documentación de la API en el siguiente enlace:
+    ```
+    http://localhost:8080/swagger-ui/index.html
+    ```
+
+## Primeros pasos
+
+### Sembrar datos iniciales
+
+1. **Sembrar países, estados y ciudades:**
+   Ejecuta el seed de países, estados y ciudades usando el siguiente endpoint:
+    ```bash
+    POST http://localhost:8080/country/seed
+    ```
+
+2. **Sembrar hoteles y habitaciones:**
+   Ejecuta el seed de hoteles y habitaciones usando el siguiente endpoint:
+    ```bash
+    POST http://localhost:8080/hotel/seed
+    ```
+
+### Creación de usuario y autenticación
+
+1. **Registrar un nuevo usuario:**
+   Puedes crear un usuario enviando una petición `POST` al siguiente endpoint:
+    ```bash
+    POST http://localhost:8080/auth/sign-up
+    Content-Type: application/json
+
+    {
+      "firstName": "Mauricio",
+      "lastName": "Mauricio",
+      "email": "maurogebe.96@gmail.com",
+      "password": "Admin1234"
+    }
+    ```
+
+2. **Iniciar sesión:**
+   Para obtener el token de autenticación, envía una petición `POST` al siguiente endpoint:
+    ```bash
+    POST http://localhost:8080/auth/sign-in
+    Content-Type: application/json
+
+    {
+      "email": "maurogebe.96@gmail.com",
+      "password": "Admin1234"
+    }
+    ```
+
+   Esto te devolverá un token JWT que deberás utilizar para autenticarte en los demás endpoints protegidos.
+
+### Acceso a endpoints públicos
+
+- **/country/seed** y **/hotel/seed**: Estos endpoints están disponibles sin autenticación.
+- **/auth/sign-up** y **/auth/sign-in**: Endpoints para registrar y autenticar usuarios, sin protección.
+
+### Acceso a endpoints protegidos
+
+Para acceder a otros endpoints de la API, necesitarás el token JWT obtenido en el paso de inicio de sesión. Usa este token en el encabezado `Authorization` como `Bearer <tu-token>`.
+
 ## Contacto
-
-
-<img src="https://i.imgur.com/sXKJZmn.jpg" alt="Avatar" style="border-radius: 50%; width: 100px; height: 120px;" />
 
 - **Nombre:** Fabian Mauricio Guerra Bedoya
 - **LinkedIn:** [Fabian Mauricio Guerra Bedoya](https://www.linkedin.com/in/fabian-mauricio-guerra-bedoya)
@@ -97,4 +113,3 @@ Para clonar este repositorio y ejecutar la aplicación localmente, sigue estos p
 ## Licencia
 
 Este proyecto está licenciado bajo la [MIT License](LICENSE).
-
