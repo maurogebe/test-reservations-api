@@ -11,6 +11,9 @@ import lombok.Setter;
 @NoArgsConstructor
 public class RoomDTO {
     
+    @JsonProperty("id")
+    private Long id;
+    
     @JsonProperty("number")
     private String number;
     

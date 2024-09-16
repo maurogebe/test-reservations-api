@@ -9,8 +9,6 @@ import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.SecurityBuilder;
-import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 
 @Configuration
@@ -22,8 +20,8 @@ public class OpenAPIConfig {
         
         return new OpenAPI()
             .info(new Info()
-                .title("Template API")
-                .description("Template API")
+                .title("Reservations API")
+                .description("API for reservations of hotel")
                 .version("1.0")
                 .contact((new Contact()
                     .name("Mauricio Guerra")
@@ -32,7 +30,8 @@ public class OpenAPIConfig {
                 ))
             )
             .components(new Components()
-                .addResponses("Unauthorized", new ApiResponse().description("Unauthorized access")))
+                .addResponses("Unauthorized", new ApiResponse().description("Unauthorized access"))
+            )
             .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
             .components(new io.swagger.v3.oas.models.Components()
                 .addSecuritySchemes("bearerAuth", new SecurityScheme()

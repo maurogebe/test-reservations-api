@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,8 +32,8 @@ public class RoomUseCase {
         return RoomMapper.INSTANCE.roomToRoomDTO(roomById.get());
     }
     
-    public List<RoomDTO> getRooms() {
-        List<Room> rooms = this.roomRepository.findAll();
+    public List<RoomDTO> getRooms(Long cityId, LocalDateTime startDate, LocalDateTime endDate, Integer capacity) {
+        List<Room> rooms = roomRepository.findAvailableRooms(cityId, startDate, endDate, capacity);
         return RoomMapper.INSTANCE.roomsToRoomsDTO(rooms);
     }
 

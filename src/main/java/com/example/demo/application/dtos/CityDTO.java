@@ -11,6 +11,9 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CityDTO {
     
+    @JsonProperty("id")
+    private Long id;
+    
     @JsonProperty("name")
     private String name;
     

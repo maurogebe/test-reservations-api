@@ -36,14 +36,14 @@ public class ReservationUseCase {
         return ReservationMapper.INSTANCE.reservationToReservationDTO(reservationById.get());
     }
     
-    public List<ReservationDTO> getReservations() {
-        List<Reservation> reservations = this.reservationRepository.findAll();
+    public List<ReservationDTO> getReservations(Long customerId, LocalDateTime startDate, LocalDateTime endDate, Long roomId) {
+        List<Reservation> reservations = this.reservationRepository.findReservations(customerId, roomId, startDate, endDate);
         return ReservationMapper.INSTANCE.reservationsToReservationsDTO(reservations);
     }
 
     public void createReservation(ReservationDTO reservation) {
         boolean validateReservation = this.validateAvailability(reservation.getStartDate(), reservation.getEndDate());
-        if(validateReservation) throw new ApiRequestException("Ya existe una reserva entre estas fechas", HttpStatus.CONFLICT);
+        if(!validateReservation) throw new ApiRequestException("Ya existe una reserva entre estas fechas", HttpStatus.CONFLICT);
         
         Optional<Customer> customerByEmail = this.customerRepository.findByEmail(reservation.getCustomer().getEmail());
         Customer customerSaved = null;
@@ -51,6 +51,25 @@ public class ReservationUseCase {
         
         if(customerSaved != null) reservation.setCustomer(CustomerMapper.INSTANCE.customerToCustomerDTO(customerSaved));
         this.reservationRepository.save(ReservationMapper.INSTANCE.reservationDTOToReservation(reservation));
+    }
+    
+    public void updateReservation(Long id, ReservationDTO reservation) {
+        ReservationDTO reservationById = this.getReservationById(id);
+        
+        Optional<Customer> customerByEmail = this.customerRepository.findByEmail(reservation.getCustomer().getEmail());
+        Customer customerSaved = null;
+        if(customerByEmail.isEmpty()) customerSaved = this.customerRepository.save(CustomerMapper.INSTANCE.customerDTOToCustomer(reservation.getCustomer()));
+        
+        if(customerSaved != null) reservationById.setCustomer(CustomerMapper.INSTANCE.customerToCustomerDTO(customerSaved));
+        if(reservation.getStartDate() != null) reservationById.setStartDate(reservation.getStartDate());
+        if(reservation.getEndDate() != null) reservationById.setEndDate(reservation.getEndDate());
+        if(reservation.getRoom() != null) reservationById.setRoom(reservation.getRoom());
+        this.reservationRepository.save(ReservationMapper.INSTANCE.reservationDTOToReservation(reservationById));
+    }
+    
+    public void deleteReservation(Long id) {
+        this.getReservationById(id);
+        this.reservationRepository.deleteById(id);
     }
     
     private boolean validateAvailability(LocalDateTime startDate, LocalDateTime endDate) {

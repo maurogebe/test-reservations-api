@@ -53,7 +53,7 @@ public class AuthController {
         @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
     @GetMapping("/user/{id}")
-    public ResponseEntity<UserResponseDTO> getUser(@RequestParam Long id) throws Exception {
+    public ResponseEntity<UserResponseDTO> getUser(@PathVariable Long id) throws Exception {
         UserResponseDTO user = this.userUsecase.getUserById(id);
         return ResponseEntity.ok(user);
     }

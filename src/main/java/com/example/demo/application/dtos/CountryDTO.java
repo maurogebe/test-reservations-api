@@ -14,6 +14,9 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CountryDTO {
     
+    @JsonProperty("id")
+    private Long id;
+    
     @JsonProperty("code")
     private String code;
     
